@@ -17,6 +17,9 @@ def handler(event, context):
  
   key = urllib.parse.unquote(event['Records'][0]['s3']['object']['key'])
   bucket = event['Records'][0]['s3']['bucket']['name']
+#   project = key.split('/')[3]
+#   page = key.split('/')[4].split('.')[0]
+#   user = key.split('/')[2]
   
   response = textract.detect_document_text(
     Document={
@@ -35,7 +38,8 @@ def handler(event, context):
   print(fullText)
 
   table.put_item(Item= {
-    'id': key,
+    'project': 'Project', # user + '/' + project,
+    'page': 4, # int(page), 
     'text': fullText
     })
 

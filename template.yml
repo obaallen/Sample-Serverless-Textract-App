@@ -8,7 +8,7 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       Handler: app.handler
-      Runtime: python3.8
+      Runtime: python3.7
       CodeUri: src/
       Description: Uses Textraxt APIs to detect text in S3 Objects and stores the results in a DynamoDB table.
       MemorySize: 512
@@ -30,10 +30,7 @@ Resources:
               Resource: '*'
             - Effect: Allow
               Action:
-                - 'dynamodb:GetItem'
-                - 'dynamodb:PutItem'
-                - 'dynamodb:Scan'
-                - 'dynamodb:UpdateItem'
+                - 'dynamodb:*'
               Resource:
                 'Fn::Join':
                   - ''
@@ -48,7 +45,7 @@ Resources:
           Type: S3
           Properties:
             Bucket:
-              Ref: SourceBucket
+              Ref: SourceTextractBucket
             Events:
               - 's3:ObjectCreated:*'
   
