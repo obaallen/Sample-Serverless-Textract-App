@@ -65,7 +65,7 @@ Once the deployment is complete, you can try uploading an image with text to s3 
 
 ### Cleanup
 
-If you are done experimenting with the API you can tear down the resources by deleting the CloudFormation stack from the AWS Console, or using the command:
+If you are done experimenting with this solution, you can tear down the resources by deleting the CloudFormation stack from the AWS Console, or using the command:
 
 ```shell
 aws cloudformation delete-stack --stack-name textract-poc
