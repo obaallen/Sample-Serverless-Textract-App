@@ -74,5 +74,5 @@ aws cloudformation delete-stack --stack-name textract-poc
 
 ## Improvements
 
-* Add Amazon SQS to allow for batch processing
+* Add Amazon SQS to allow for async batch processing
 * Add an API Gateway and Lambda function to query the results in DynamoDB
