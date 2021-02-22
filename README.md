@@ -5,7 +5,9 @@
 
 This Sample Document Scanner is a simple serverless solution that allows you to extract text and data from documents. For this solution, a user will put the file to be processed in an s3 bucket. The s3 bucket will trigger an event that will call an AWS Lambda function responsible for taking that file from s3 and making a call to Amazon Textract to extract the texts in the file. One the extraction is done, Lambda will save the result in an Amazon DynamoDB table.
 
+
 ![](Diagram.png) 
+
 
 To run the solution, clone/download the project. To deploy the solution follow the steps below:
 
