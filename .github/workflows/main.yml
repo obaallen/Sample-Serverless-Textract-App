@@ -58,7 +58,7 @@ jobs:
       - name: Test Local invocation
         working-directory: ./repo
         run: |
-          sam local invoke HelloWorldFunction --event events/event.json
+          sam local invoke DetectTextWithTextract --event events/event.json
       - name: Deploy the app
         working-directory: ./repo
         run: |
