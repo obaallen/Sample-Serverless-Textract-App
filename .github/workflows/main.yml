@@ -1,0 +1,65 @@
+  
+name: SAM sample application
+
+on:
+  workflow_dispatch:
+    inputs:
+      region:
+        description: 'AWS Region'
+        required: true
+        default: 'us-east-2'
+
+jobs:
+  samappdeploy:
+    name: Deploy stack to AWS
+    runs-on: ubuntu-latest
+    outputs:
+      env-name: ${{ steps.env-name.outputs.environment }}
+
+    steps:
+      - name: Create folders
+        run: |
+          mkdir sam
+          mkdir repo
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ./repo
+
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region}}
+
+      - name: Configure environment name
+        id: env-name
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          ENVIRONMENT=`echo $REPO | tr "/" "-"`
+          echo "Environment name: $ENVIRONMENT"
+          echo "::set-output name=environment::$ENVIRONMENT"
+      - name: Install SAM CLI
+        working-directory: ./sam
+        run: |
+          pwd
+          curl -OL https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+          ls -latr
+          unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+          sudo ./sam-installation/install
+          sam --version
+      - name: Build the app
+        working-directory: ./repo
+        run: |
+          sam build --use-container
+      - name: Test Local invocation
+        working-directory: ./repo
+        run: |
+          sam local invoke HelloWorldFunction --event events/event.json
+      - name: Deploy the app
+        working-directory: ./repo
+        run: |
+          sam deploy --stack-name sam-app --s3-bucket mriccia-temp-sg --capabilities CAPABILITY_IAM
