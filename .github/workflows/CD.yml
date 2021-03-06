@@ -3,11 +3,6 @@ name: SAM sample application
 on:
   push:
     branches: [ main ]
-    inputs:
-      region:
-        description: 'AWS Region'
-        required: false
-        default: 'us-east-2'
 
 jobs:
   samappdeploy:
@@ -32,7 +27,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region.default}}
+          aws-region: us-east-2
 
       - name: Configure environment name
         id: env-name
