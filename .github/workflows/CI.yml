@@ -1,5 +1,5 @@
   
-name: SAM sample application
+name: SAM sample application continuous integration workflow
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   samappdeploy:
-    name: Deploy stack to AWS
+    name: Build and Test App
     runs-on: ubuntu-latest
     outputs:
       env-name: ${{ steps.env-name.outputs.environment }}
