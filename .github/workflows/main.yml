@@ -58,6 +58,8 @@ jobs:
       - name: Test Local invocation
         working-directory: ./repo
         run: |
+          docker run -p 8000:8000 amazon/dynamodb-local
+          aws dynamodb create-table --table-name ResultsTable
           sam local invoke DetectTextWithTextract --event events/event.json
       - name: Deploy the app
         working-directory: ./repo
