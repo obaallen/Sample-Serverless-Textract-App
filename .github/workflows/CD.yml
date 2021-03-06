@@ -6,7 +6,7 @@ on:
     inputs:
       region:
         description: 'AWS Region'
-        required: true
+        required: false
         default: 'us-east-2'
 
 jobs:
