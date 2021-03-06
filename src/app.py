@@ -17,6 +17,7 @@ def handler(event, context):
  
   key = urllib.parse.unquote(event['Records'][0]['s3']['object']['key'])
   bucket = event['Records'][0]['s3']['bucket']['name']
+
   
   response = textract.detect_document_text(
     Document={
@@ -31,13 +32,15 @@ def handler(event, context):
   for item in response["Blocks"]:
     if item["BlockType"] == "LINE":
         fullText = fullText + item["Text"] + '\n'
+        confidence = item["Confidence"]
   
   print(fullText)
 
   table.put_item(Item= {
     'id': key,
+    'confidence': int(confidence),
     'text': fullText
     })
 
- 
+  # print(response)
   return 
