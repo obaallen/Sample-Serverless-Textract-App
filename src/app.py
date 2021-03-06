@@ -39,4 +39,5 @@ def handler(event, context):
     'text': fullText
     })
 
+  
   return 
