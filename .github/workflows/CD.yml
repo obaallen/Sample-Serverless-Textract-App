@@ -1,4 +1,4 @@
-name: SAM sample application
+name: SAM sample application deployment
 
 on:
   push:
