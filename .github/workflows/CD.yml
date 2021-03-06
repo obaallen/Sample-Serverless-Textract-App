@@ -53,4 +53,4 @@ jobs:
       - name: Deploy the app
         working-directory: ./repo
         run: |
-          sam deploy --stack-name sam-app --capabilities CAPABILITY_IAM
+          sam deploy --stack-name sam-app --capabilities CAPABILITY_IAM --confirm-changeset
